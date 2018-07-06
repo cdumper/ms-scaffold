@@ -1,0 +1,28 @@
+version: '3'
+services:
+    eureka:
+        restart: always
+        container_name: eureka
+        hostname: eureka
+        build:
+            context: ./eureka
+            dockerfile: deployment/Dockerfile
+        expose:
+            - "8761"
+        ports:
+            - 8761:8761
+    config-server:
+        restart: always
+        container_name: config-server
+        hostname: config-server
+        depends_on:
+          - eureka
+        links:
+          - eureka
+        build:
+            context: ./config-server
+            dockerfile: deployment/Dockerfile
+        expose:
+            - "8888"
+        ports:
+            - 8888:8888
