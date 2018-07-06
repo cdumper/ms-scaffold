@@ -26,3 +26,33 @@ services:
             - "8888"
         ports:
             - 8888:8888
+    product-service:
+        restart: always
+        container_name: product-service
+        hostname: product-service
+        build:
+            context: ./product-service
+            dockerfile: deployment/Dockerfile
+        ports:
+            - 8081:8081
+        links:
+            - product-service-db
+            - eureka
+            - config-server
+        depends_on:
+            - product-service-db
+            - eureka
+            - config-server
+    product-service-db:
+        restart: always
+        container_name: product-service-db
+        image: mysql
+        expose:
+            - "3306"
+        volumes:
+            - ./product-service/deployment/db:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: product_service
+            MYSQL_USER: root
+            MYSQL_PASSWORD: root

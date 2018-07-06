@@ -1,0 +1,23 @@
+---
+spring:
+  profiles: local
+  cloud:
+    config:
+      uri: http://localhost:8888
+      profile: ${spring.profiles.active}
+
+---
+spring:
+  profiles: docker
+  cloud:
+    config:
+      uri: http://config-server:8888
+      profile: ${spring.profiles.active}
+
+---
+spring:
+  profiles: k8s
+  cloud:
+    config:
+      uri: http://config-server:8888
+      profile: ${spring.profiles.active}

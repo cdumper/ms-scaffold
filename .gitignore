@@ -4,6 +4,7 @@
 *.war
 *.ear
 **/build/
+**/out/
 
 *.DS_Store
 
