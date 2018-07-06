@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/cdumper/ms-scaffold.git
+          search-paths: config-server/configs
+server:
+  port: 8888
+
+---
+spring:
+  profiles: local
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+---
+spring:
+  profiles: docker
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:8761/eureka

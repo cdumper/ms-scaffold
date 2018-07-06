@@ -1,0 +1,4 @@
+rootProject.name = 'ms-scaffold'
+include 'eureka'
+include 'config-server'
+
