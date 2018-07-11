@@ -8,5 +8,8 @@ spring:
       server:
         native:
           search-locations: classpath:configs
+        git:
+          uri: https://github.com/cdumper/ms-scaffold.git
+          search-paths: config-server/src/main/resources/configs
   profiles:
     active: native

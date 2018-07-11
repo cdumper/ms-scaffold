@@ -1,17 +1,16 @@
 version: '3'
 services:
     eureka:
+        image: ${DOCKER_REGISTRY:-}${DOCKER_REPO:-}eureka:${VERSION}
         restart: always
         container_name: eureka
         hostname: eureka
-        build:
-            context: ./eureka
-            dockerfile: deployment/Dockerfile
         expose:
             - "8761"
         ports:
             - 8761:8761
     config-server:
+        image: ${DOCKER_REGISTRY:-}${DOCKER_REPO:-}config-server:${VERSION}
         restart: always
         container_name: config-server
         hostname: config-server
@@ -19,20 +18,15 @@ services:
           - eureka
         links:
           - eureka
-        build:
-            context: ./config-server
-            dockerfile: deployment/Dockerfile
         expose:
             - "8888"
         ports:
             - 8888:8888
     product-service:
+        image: ${DOCKER_REGISTRY:-}${DOCKER_REPO:-}product-service:${VERSION}
         restart: always
         container_name: product-service
         hostname: product-service
-        build:
-            context: ./product-service
-            dockerfile: deployment/Dockerfile
         ports:
             - 8081:8081
         links:
@@ -50,7 +44,7 @@ services:
         expose:
             - "3306"
         volumes:
-            - ./product-service/deployment/db:/var/lib/mysql
+            - ./services/product-service/deployment/db:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: product_service

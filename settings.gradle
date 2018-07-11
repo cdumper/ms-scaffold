@@ -1,5 +1,12 @@
 rootProject.name = 'ms-scaffold'
-include 'eureka'
-include 'config-server'
-include 'product-service'
+include ':infrastructures'
+include ':infrastructures:eureka'
+include ':infrastructures:config-server'
+include ':services'
+include ':services:product-service'
 
+project(':infrastructures').projectDir = "$rootDir/infrastructures" as File
+project(':infrastructures:eureka').projectDir = "$rootDir/infrastructures/eureka" as File
+project(':infrastructures:config-server').projectDir = "$rootDir/infrastructures/config-server" as File
+project(':services').projectDir = "$rootDir/services" as File
+project(':services:product-service').projectDir = "$rootDir/services/product-service" as File

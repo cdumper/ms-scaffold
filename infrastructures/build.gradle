@@ -1,0 +1,23 @@
+subprojects {
+    project ->
+        apply plugin: "org.springframework.boot"
+        apply plugin: "docker"
+
+        bootJar {
+            requiresUnpack 'com.netflix.eureka:eureka-core', 'com.netflix.eureka:eureka-client'
+        }
+
+        def application = System.getenv("DOCKER_REPO") ? "${System.getenv("DOCKER_REPO")}/${project.name}": "${project.name}"
+        def unified = System.getenv("DOCKER_REGISTRY") ? "${System.getenv("DOCKER_REGISTRY")}/${application}": "${application}"
+        task buildDocker(type: Docker) {
+            baseImage = "openjdk:8-jdk-alpine"
+            tag = "${unified}"
+            addFile {
+                from bootJar
+                rename { 'app.jar' }
+            }
+            entryPoint(['java', '-jar', '/app.jar', '--spring.profiles.active=docker'])
+        }
+
+        buildDocker.dependsOn(build)
+}
