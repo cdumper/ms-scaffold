@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      discovery:
+        enabled: false
+      server:
+        native:
+          search-locations: classpath:configs
+  profiles:
+    active: native
