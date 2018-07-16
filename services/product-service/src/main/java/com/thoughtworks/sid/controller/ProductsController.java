@@ -27,7 +27,7 @@ public class ProductsController {
     ProductRepository productRepository;
 
     @ApiOperation(value = "创建产品")
-    @RequestMapping(value = "/",
+    @RequestMapping(value = "",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -40,7 +40,7 @@ public class ProductsController {
     }
 
     @ApiOperation(value = "获取产品列表")
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity getProducts() {
         List<Product> allProducts = productRepository.findAll();
         return new ResponseEntity(allProducts, HttpStatus.OK);
