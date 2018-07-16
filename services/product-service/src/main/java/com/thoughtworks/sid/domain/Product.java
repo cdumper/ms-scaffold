@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class Product {
     @ApiModelProperty("ID")
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @ApiModelProperty("名称")

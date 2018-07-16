@@ -1,4 +1,4 @@
-package com.thoughtworks.sid;
+package com.thoughtworks.sid.ut;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;

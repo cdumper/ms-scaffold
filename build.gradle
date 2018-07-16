@@ -11,9 +11,12 @@ buildscript {
 }
 
 ext {
-    springBootVersion = '2.0.3.RELEASE'
-    springCloudVersion = 'Finchley.RELEASE'
-    swaggerVersion = '2.8.0'
+    springBoot = '2.0.3.RELEASE'
+    springCloud = 'Finchley.RELEASE'
+    swagger = '2.8.0'
+    flyway = '5.1.4'
+    mysql = '8.0.11'
+    h2 = '1.4.197'
 }
 
 subprojects {
@@ -39,8 +42,8 @@ subprojects {
 
     dependencyManagement {
         imports {
-            mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
-            mavenBom("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
+            mavenBom("org.springframework.boot:spring-boot-dependencies:${springBoot}")
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:${springCloud}")
         }
     }
 }
