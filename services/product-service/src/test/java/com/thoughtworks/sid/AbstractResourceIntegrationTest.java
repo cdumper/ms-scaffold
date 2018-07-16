@@ -1,12 +1,9 @@
-package com.thoughtworks.sid.it;
+package com.thoughtworks.sid;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.thoughtworks.sid.ProductServiceApplication;
 import org.flywaydb.core.Flyway;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -16,23 +13,22 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = ProductServiceApplication.class,
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         properties = {
                 "eureka.client.enabled=false",
                 "spring.config.enabled=false"
         }
 )
 @AutoConfigureWebTestClient
-abstract class IntegrationTest {
+public abstract class AbstractResourceIntegrationTest {
     @LocalServerPort
-    int port;
+    protected int port;
 
     @Autowired
-    WebTestClient webClient;
+    protected WebTestClient webClient;
 
     @Autowired
-    ObjectMapper mapper;
+    protected ObjectMapper mapper;
 
     @Autowired
     Flyway flyway;

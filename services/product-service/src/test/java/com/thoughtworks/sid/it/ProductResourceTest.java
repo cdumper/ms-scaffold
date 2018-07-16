@@ -1,14 +1,14 @@
 package com.thoughtworks.sid.it;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.thoughtworks.sid.AbstractResourceIntegrationTest;
 import com.thoughtworks.sid.domain.Product;
 import org.junit.Test;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import java.util.Collections;
 
-
-public class ProductResourceTest extends IntegrationTest {
+public class ProductResourceTest extends AbstractResourceIntegrationTest {
     private final Product VALID_PRODUCT = new Product("product 1", "product 1 description");
     private final Product SAVED_PRODUCT = new Product(1L, "product 1", "product 1 description");
 
