@@ -1,8 +1,5 @@
-spring:
-  application:
-    name: eureka
 server:
-  port: 8761
+  port: ${EUREKA_SERVICE_PORT:8761}
 
 # eureka.client.registerWithEureka 不注册自己到Eureka服务中心
 # eureka.client.fetchRegistry 从Eureka服务中心获取注册信息
@@ -13,8 +10,6 @@ eureka:
   client:
     registerWithEureka: false
     fetchRegistry: false
-    serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 
 # 打印日志
 # logging.file 将日志打印到指定文件

@@ -7,6 +7,11 @@ subprojects {
             requiresUnpack 'com.netflix.eureka:eureka-core', 'com.netflix.eureka:eureka-client'
         }
 
+        dependencies {
+            compile "org.springframework.boot:spring-boot-starter-aop"
+            compile "org.springframework.retry:spring-retry:$springRetry"
+        }
+
         def application = System.getenv("DOCKER_REPO") ? "${System.getenv("DOCKER_REPO")}/${project.name}": "${project.name}"
         def unified = System.getenv("DOCKER_REGISTRY") ? "${System.getenv("DOCKER_REGISTRY")}/${application}": "${application}"
         task buildDocker(type: Docker) {
@@ -16,7 +21,7 @@ subprojects {
                 from bootJar
                 rename { 'app.jar' }
             }
-            entryPoint(['java', '-jar', '/app.jar', '--spring.profiles.active=docker'])
+            entryPoint(['java', '-jar', '/app.jar'])
         }
 
         buildDocker.dependsOn(build)

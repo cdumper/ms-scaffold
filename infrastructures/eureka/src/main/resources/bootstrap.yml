@@ -1,9 +1,9 @@
 spring:
   application:
-    name: product-service
+    name: eureka
   cloud:
     config:
-      uri: http://${CONFIG_SERVICE_HOST}:${CONFIG_SERVICE_PORT}
+      uri: http://${CONFIG_SERVICE_HOST:localhost}:${CONFIG_SERVICE_PORT:8888}
       fail-fast: true
       retry:
          max-attempts: 10000

@@ -8,8 +8,8 @@ spring:
     url: jdbc:h2:mem:product_service;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_UPPER=false
     driver-class-name: org.h2.Driver
   flyway:
-      locations: classpath:db/migration
-      baseline-on-migrate: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
   jpa:
     hibernate:
       ddl-auto: create

@@ -1,27 +1,29 @@
 version: '3'
 services:
-    eureka:
-        image: ${DOCKER_REGISTRY:-}${DOCKER_REPO:-}eureka:${VERSION}
-        restart: always
-        container_name: eureka
-        hostname: eureka
-        expose:
-            - "8761"
-        ports:
-            - 8761:8761
     config-server:
         image: ${DOCKER_REGISTRY:-}${DOCKER_REPO:-}config-server:${VERSION}
         restart: always
         container_name: config-server
         hostname: config-server
-        depends_on:
-          - eureka
-        links:
-          - eureka
-        expose:
-            - "8888"
         ports:
             - 8888:8888
+        environment:
+            CONFIG_SERVICE_PORT: 8888
+    eureka:
+        image: ${DOCKER_REGISTRY:-}${DOCKER_REPO:-}eureka:${VERSION}
+        restart: always
+        container_name: eureka
+        hostname: eureka
+        links:
+            - config-server
+        depends_on:
+            - config-server
+        ports:
+            - 8761:8761
+        environment:
+            CONFIG_SERVICE_HOST: config-server
+            CONFIG_SERVICE_PORT: 8888
+            EUREKA_SERVICE_PORT: 8761
     product-service:
         image: ${DOCKER_REGISTRY:-}${DOCKER_REPO:-}product-service:${VERSION}
         restart: always
@@ -37,6 +39,15 @@ services:
             - product-service-db
             - eureka
             - config-server
+        environment:
+            PRODUCT_SERVICE_PORT: 8081
+            CONFIG_SERVICE_HOST: config-server
+            CONFIG_SERVICE_PORT: 8888
+            EUREKA_SERVICE_HOST: eureka
+            EUREKA_SERVICE_PORT: 8761
+            PRODUCT_SERVICE_DB_HOST: product-service-db
+            PRODUCT_SERVICE_DB_PORT: 3306
+            PRODUCT_SERVICE_DB_NAME: product_service
     product-service-db:
         restart: always
         container_name: product-service-db

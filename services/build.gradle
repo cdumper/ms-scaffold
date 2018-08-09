@@ -10,6 +10,8 @@ subprojects {
             compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
             compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
             compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-config'
+            compile "org.springframework.boot:spring-boot-starter-aop"
+            compile "org.springframework.retry:spring-retry:$springRetry"
             compile group: 'mysql', name: 'mysql-connector-java', version: mysql
             compile "org.flywaydb:flyway-core:$flyway"
 
@@ -26,7 +28,7 @@ subprojects {
                 from bootJar
                 rename { 'app.jar' }
             }
-            entryPoint(['java', '-jar', '/app.jar', '--spring.profiles.active=docker'])
+            entryPoint(['java', '-jar', '/app.jar'])
         }
 
         buildDocker.dependsOn(build)

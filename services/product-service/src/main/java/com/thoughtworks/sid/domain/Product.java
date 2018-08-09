@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Product")
+@Table
 @ApiModel("Product model")
 public class Product {
     @ApiModelProperty("ID")

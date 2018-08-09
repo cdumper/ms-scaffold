@@ -13,6 +13,7 @@ buildscript {
 ext {
     springBoot = '2.0.3.RELEASE'
     springCloud = 'Finchley.RELEASE'
+    springRetry = "1.2.2.RELEASE"
     swagger = '2.8.0'
     flyway = '5.1.4'
     mysql = '8.0.11'
