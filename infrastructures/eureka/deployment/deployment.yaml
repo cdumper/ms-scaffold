@@ -14,10 +14,17 @@ spec:
     spec:
       containers:
       - name: eureka-service
-        image: eureka-service
+        image: eureka:1.0-SNAPSHOT
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 8761
+        env:
+          - name: CONFIG_SERVICE_HOST
+            value: 'config-server'
+          - name: CONFIG_SERVICE_PORT
+            value: '8888'
+          - name: EUREKA_SERVICE_PORT
+            value: '8761'
       restartPolicy: Always
   selector:
     matchLabels:
