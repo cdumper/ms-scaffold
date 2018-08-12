@@ -1,14 +1,18 @@
 package com.thoughtworks.sid.ut;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.thoughtworks.sid.AbstractResourceUnitTest;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.sid.controller.ProductsController;
 import com.thoughtworks.sid.domain.Product;
 import com.thoughtworks.sid.repository.ProductRepository;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 
 import java.util.Collections;
@@ -20,18 +24,22 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-public class ProductResourceTest extends AbstractResourceUnitTest {
+@RunWith(SpringRunner.class)
+@WebMvcTest(controllers = ProductsController.class)
+public class ProductResourceTest {
+    @Autowired
+    MockMvc mockMvc;
+
+    @Autowired
+    protected ObjectMapper objectMapper;
+
     @Autowired
     ProductsController productsController;
 
     @MockBean
     private ProductRepository productRepository;
 
-    @Override
-    protected Object getTestingController() {
-        return productsController;
-    }
-
+    private final String BASE_URI = "http://localhost";
     private final String PRODUCT_URL = "/api/products";
     private final Long PRODUCT_ID = 1L;
     private final Product VALID_PRODUCT = new Product("product 1", "product 1 description");

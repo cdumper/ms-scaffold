@@ -10,8 +10,12 @@ import java.util.List;
 
 @RestController
 public class NodejsBookController {
+    private final NodejsFeignClient client;
+
     @Autowired
-    private NodejsFeignClient client;
+    public NodejsBookController(NodejsFeignClient client) {
+        this.client = client;
+    }
 
     @RequestMapping("/books/{id}")
     public List book(@PathVariable Long id) {
