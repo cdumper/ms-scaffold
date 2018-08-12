@@ -17,13 +17,28 @@ subprojects {
         def application = System.getenv("DOCKER_REPO") ? "${System.getenv("DOCKER_REPO")}/${project.name}": "${project.name}"
         def unified = System.getenv("DOCKER_REGISTRY") ? "${System.getenv("DOCKER_REGISTRY")}/${application}": "${application}"
         task buildDocker(type: Docker) {
-            baseImage = "openjdk:8-jdk-alpine"
             tag = "${unified}"
-            addFile {
-                from bootJar
-                rename { 'app.jar' }
+            if (file("deployment/Dockerfile").exists()) {
+                dockerfile = "./deployment/Dockerfile"
+            } else {
+                baseImage = "openjdk:8-jdk-alpine"
+                addFile {
+                    from bootJar
+                    rename { 'app.jar' }
+                }
+                entryPoint(['java', '-jar', '/app.jar'])
             }
-            entryPoint(['java', '-jar', '/app.jar'])
+
+            doFirst {
+                copy {
+                    from jar
+                    into stageDir
+                }
+                copy {
+                    from file("nodejs/")
+                    into file("build/docker/nodejs")
+                }
+            }
         }
 
         buildDocker.dependsOn(build)
