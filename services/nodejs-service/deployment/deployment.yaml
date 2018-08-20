@@ -12,6 +12,7 @@ spec:
       labels:
         app: nodejs-service
     spec:
+      hostname: nodejs-service
       containers:
         - name: nodejs-service
           image: nodejs-service:1.0-SNAPSHOT
