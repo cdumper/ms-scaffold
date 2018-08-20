@@ -23,6 +23,12 @@ spec:
               value: 'root'
             - name: MYSQL_DATABASE
               value: 'product_service'
+        - name: product-service
+          image: product-service:1.0-SNAPSHOT
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081
+          env:
             - name: CONFIG_SERVICE_HOST
               value: 'config-server'
             - name: CONFIG_SERVICE_PORT
@@ -31,11 +37,14 @@ spec:
               value: 'eureka'
             - name: EUREKA_SERVICE_PORT
               value: '8761'
-        - name: product-service
-          image: product-service:1.0-SNAPSHOT
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 8081
+            - name: PRODUCT_SERVICE_PORT
+              value: '8081'
+            - name: PRODUCT_SERVICE_DB_HOST
+              value: 'localhost'
+            - name: PRODUCT_SERVICE_DB_PORT
+              value: '3306'
+            - name: PRODUCT_SERVICE_DB_NAME
+              value: 'product_service'
   selector:
     matchLabels:
       app: product-service

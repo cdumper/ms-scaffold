@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-service-deployment
+  labels:
+    app: nodejs-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: nodejs-service
+      labels:
+        app: nodejs-service
+    spec:
+      containers:
+        - name: nodejs-service
+          image: nodejs-service:1.0-SNAPSHOT
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8082
+          env:
+            - name: NODEJS_SERVICE_SIDECAR_PORT
+              value: '8082'
+            - name: NODEJS_SERVICE_PORT
+              value: '3000'
+            - name: CONFIG_SERVICE_HOST
+              value: 'config-server'
+            - name: CONFIG_SERVICE_PORT
+              value: '8888'
+            - name: EUREKA_SERVICE_host
+              value: 'eureka'
+            - name: EUREKA_SERVICE_PORT
+              value: '8761'
+  selector:
+    matchLabels:
+      app: nodejs-service
